@@ -6,7 +6,7 @@ chord = d3.layout.chord!
   ..padding 0.035
 width = 720
 height = 720
-innerRadius = 680 * 0.48
+innerRadius = 670 * 0.48
 outerRadius = 680 * 0.5
 arcFill = (d, i) ->
   chordFill i
@@ -22,6 +22,65 @@ drawing = svg.append \g
   ..attr \transform "translate(#{width / 2}, #{height / 2})"
 def = d3.svg.arc!innerRadius innerRadius .outerRadius outerRadius + 5
 def2 = d3.svg.arc!innerRadius innerRadius .outerRadius outerRadius
+euCodes = <[BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
+fullNames =
+  "Belgie"
+  "Bulharsko"
+  "Česká republika"
+  "Dánsko"
+  "Německo"
+  "Estonsko"
+  "Irsko"
+  "Řecko"
+  "Španělsko"
+  "Francie"
+  "Chorvatsko"
+  "Itálie"
+  "Kypr"
+  "Lotyšsko"
+  "Litva"
+  "Luxemburg"
+  "Maďarsko"
+  "Malta"
+  "Nizozemí"
+  "Rakousko"
+  "Polsko"
+  "Portugalsko"
+  "Rumunsko"
+  "Slovinsko"
+  "Slovensko"
+  "Finsko"
+  "Švédsko"
+  "Spojené království"
+euNames =
+  "Belgie"
+  "BG"
+  "CZ"
+  "Dán."
+  "Německo"
+  "EE"
+  "Irsko"
+  "Řec."
+  "Španělsko"
+  "Francie"
+  "HR"
+  "Itálie"
+  "CY"
+  "LV"
+  "LT"
+  "LU"
+  "HU"
+  "MT"
+  "Nizoz."
+  "Rakousko"
+  "Pol."
+  "PT"
+  "RO"
+  "SI"
+  "SK"
+  "Fin."
+  "Švéd."
+  "Spojené království"
 drawing.selectAll \path.radius .data chord.groups .enter!append \path
   ..attr \class \radius
   ..style \fill arcFill
@@ -33,17 +92,17 @@ drawing.selectAll \path.radius .data chord.groups .enter!append \path
       for i in [0 til 28]
         outbound += data[i][index]
         inbound += data[index][i]
-      "Turistů: #{ig.utils.formatNumber outbound}<br>
-      Návštěvníků:#{ig.utils.formatNumber inbound}"
+      "<b>#{fullNames[index]}</b><br>
+      Odjíždějící #{ig.utils.formatNumber outbound}<br>
+      Přijíždějící #{ig.utils.formatNumber inbound}"
 defs.selectAll \path .data chord.groups .enter!append \path
   ..attr \id (d, i) -> "textPath-#i"
   ..attr \d def
-euCodes = <[BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
 drawing.selectAll \text .data chord.groups .enter!append \text
   ..append \textPath
     ..attr \xlink:href (d, i) -> '#textPath-' + i
     ..text (d, i) ->
-      euCodes[i]
+      euNames[i]
 
 def = d3.svg.chord!radius innerRadius
 
@@ -54,5 +113,5 @@ drawing.selectAll \path.chord .data chord.chords .enter!append \path
   ..style \fill (d, i) -> chordFill i
   ..style \stroke (d, i) -> chordFill i
   ..attr \data-tooltip ({source, target}:d) ->
-    "#{euCodes[target.index]} -> #{euCodes[source.index]} #{ig.utils.formatNumber data[source.index][target.index]}<br>
-    #{euCodes[source.index]} -> #{euCodes[target.index]} #{ig.utils.formatNumber data[target.index][source.index]}"
+    "#{fullNames[target.index]} ➔ #{fullNames[source.index]} #{ig.utils.formatNumber data[source.index][target.index]}<br>
+    #{fullNames[source.index]} ➔ #{fullNames[target.index]} #{ig.utils.formatNumber data[target.index][source.index]}"
