@@ -52,7 +52,7 @@ fullNames =
   "Slovensko"
   "Finsko"
   "Švédsko"
-  "Spojené království"
+  "Británie"
 euNames =
   "Česko"
   "Belgie"
@@ -81,9 +81,9 @@ euNames =
   "SK"
   "Finsko"
   "Švédsko"
-  "Spojené království"
-draw = (data) ->
-  chord.matrix data
+  "Británie"
+draw = (dataToUse) ->
+  chord.matrix dataToUse
   defs.selectAll \path .data chord.groups
     ..enter!append \path
       ..attr \id (d, i) -> "textPath-#i"
