@@ -83,24 +83,6 @@ euNames =
   "Spojené království"
 draw = (data) ->
   chord.matrix data
-  drawing.selectAll \path.radius .data chord.groups
-    ..enter!append \path
-      ..attr \class \radius
-      ..style \fill arcFill
-    ..attr \data-tooltip (d) ->
-        outbound = 0
-        inbound = 0
-        index = d.index
-        for i in [0 til 28]
-          outbound += data[i][index]
-          inbound += data[index][i]
-        "<b>#{fullNames[index]}</b><br>
-        Odjíždějící #{ig.utils.formatNumber outbound}<br>
-        Přijíždějící #{ig.utils.formatNumber inbound}"
-
-    ..transition!
-      ..duration 800
-      ..attr \d def2
   defs.selectAll \path .data chord.groups
     ..enter!append \path
       ..attr \id (d, i) -> "textPath-#i"
@@ -129,5 +111,23 @@ draw = (data) ->
     ..transition!
       ..duration 800
       ..attr \d def3
+  drawing.selectAll \path.radius .data chord.groups
+    ..enter!append \path
+      ..attr \class \radius
+      ..style \fill arcFill
+    ..attr \data-tooltip (d) ->
+        outbound = 0
+        inbound = 0
+        index = d.index
+        for i in [0 til 28]
+          outbound += data[i][index]
+          inbound += data[index][i]
+        "<b>#{fullNames[index]}</b><br>
+        Odjíždějící #{ig.utils.formatNumber outbound}<br>
+        Přijíždějící #{ig.utils.formatNumber inbound}"
+
+    ..transition!
+      ..duration 800
+      ..attr \d def2
 
 draw matrix
