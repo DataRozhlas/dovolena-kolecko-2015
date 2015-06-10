@@ -1,5 +1,5 @@
 require! fs
-euCodes = <[BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
+euCodes = <[CZ BE BG DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
 lines = fs.readFileSync "#__dirname/../data/all.tsv" .toString!split "\n"
   ..shift!
   ..pop!

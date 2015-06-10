@@ -22,11 +22,11 @@ drawing = svg.append \g
   ..attr \transform "translate(#{width / 2}, #{height / 2})"
 def = d3.svg.arc!innerRadius innerRadius .outerRadius outerRadius + 5
 def2 = d3.svg.arc!innerRadius innerRadius .outerRadius outerRadius
-euCodes = <[BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
+euCodes = <[CZ BE BG DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT NL AT PL PT RO SI SK FI SE UK]>
 fullNames =
+  "Česká republika"
   "Belgie"
   "Bulharsko"
-  "Česká republika"
   "Dánsko"
   "Německo"
   "Estonsko"
@@ -53,14 +53,14 @@ fullNames =
   "Švédsko"
   "Spojené království"
 euNames =
+  "Česko"
   "Belgie"
   "BG"
-  "CZ"
   "Dán."
   "Německo"
   "EE"
   "Irsko"
-  "Řec."
+  "Řecko"
   "Španělsko"
   "Francie"
   "HR"
@@ -71,15 +71,15 @@ euNames =
   "LU"
   "HU"
   "MT"
-  "Nizoz."
+  "Nizozemsko"
   "Rakousko"
-  "Pol."
+  "Polsko"
   "PT"
   "RO"
   "SI"
   "SK"
-  "Fin."
-  "Švéd."
+  "Finsko"
+  "Švédsko"
   "Spojené království"
 drawing.selectAll \path.radius .data chord.groups .enter!append \path
   ..attr \class \radius
@@ -97,8 +97,12 @@ drawing.selectAll \path.radius .data chord.groups .enter!append \path
       Přijíždějící #{ig.utils.formatNumber inbound}"
 defs.selectAll \path .data chord.groups .enter!append \path
   ..attr \id (d, i) -> "textPath-#i"
-  ..attr \d def
+  ..attr \d ->
+    {startAngle, endAngle} = it
+    endAngle += 0.1
+    def {startAngle, endAngle}
 drawing.selectAll \text .data chord.groups .enter!append \text
+  ..attr \class (d, i) -> euCodes[i]
   ..append \textPath
     ..attr \xlink:href (d, i) -> '#textPath-' + i
     ..text (d, i) ->
