@@ -11,10 +11,11 @@ arcFill = (d, i) ->
   chordFill i
 
 chordFill = d3.scale.category20c!
-
 svg = container.append \svg
   ..attr \width width
   ..attr \height height
+titleArea = container.append \div
+  ..attr \class \title-area
 defs = svg.append \defs
 
 drawing = svg.append \g
@@ -131,3 +132,33 @@ draw = (data) ->
       ..attr \d def2
 
 draw matrix
+
+
+titleHeader = titleArea.append \h2
+  ..html "Zobrazen součet přijíždějících a odjíždějících turistů"
+items =
+  * title: "podle počtu přijíždějících"
+    header: "Zobrazen počet přijíždějících turistů"
+    data: data
+  * title: "podle počtu odjíždějících"
+    header: "Zobrazen počet odjíždějících turistů"
+    data: inverseData
+  * title: "podle součtu"
+    header: "Zobrazen součet přijíždějících a odjíždějících turistů"
+    data: matrix
+    selected: yes
+titleArea.append \div
+  ..attr \class \selector
+  ..append \span .html "Zobrazit podle "
+  ..append \ul .selectAll \li .data items .enter!append \li
+    ..append \a
+      ..attr \href \#
+      ..html (.title)
+    ..classed \selected (.selected)
+    ..on \click (selected) ->
+      selectorListItems.classed \selected -> it is selected
+      draw selected.data
+      titleHeader.html selected.header
+  ..append \span .html " turistů."
+
+selectorListItems = titleArea.selectAll \li

@@ -25,4 +25,24 @@
 
     &.MT
       font-size 0.7em
+  .title-area
+    padding-left 30px
+    h2
+      font-weight normal
+    .selector
+      // span
+      //   display block
+      //   float left
+      ul
+        display inline
+        margin 0px
+        padding 0px
+        li
+          padding 0px
+          display inline
+          &.selected
+            display none
+          &:not(.selected) ~ li:before
+            content " nebo "
+
 
