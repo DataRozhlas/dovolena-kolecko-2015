@@ -137,28 +137,30 @@ draw matrix
 titleHeader = titleArea.append \h2
   ..html "Zobrazen součet přijíždějících a odjíždějících turistů"
 items =
-  * title: "podle počtu přijíždějících"
+  * title: "Zobrazit podle počtu přijíždějících"
     header: "Zobrazen počet přijíždějících turistů"
     data: data
-  * title: "podle počtu odjíždějících"
+  * title: "počtu odjíždějících"
     header: "Zobrazen počet odjíždějících turistů"
     data: inverseData
-  * title: "podle součtu"
+  * title: "podle součtu turistů"
     header: "Zobrazen součet přijíždějících a odjíždějících turistů"
     data: matrix
     selected: yes
 titleArea.append \div
   ..attr \class \selector
-  ..append \span .html "Zobrazit podle "
-  ..append \ul .selectAll \li .data items .enter!append \li
-    ..append \a
-      ..attr \href \#
+  ..append \div .selectAll \div .data items .enter!append \div
+    ..attr \class \box
+    ..append \input
+      ..attr \checked -> if it.selected then true else void
+      ..attr \id (d, i) -> "chc-#i"
+      ..attr \name \chc
+      ..attr \type \radio
+      ..on \change (selected) ->
+        draw selected.data
+        titleHeader.html selected.header
+    ..append \label
+      ..attr \for (d, i) -> "chc-#i"
       ..html (.title)
-    ..classed \selected (.selected)
-    ..on \click (selected) ->
-      selectorListItems.classed \selected -> it is selected
-      draw selected.data
-      titleHeader.html selected.header
-  ..append \span .html " turistů."
 
 selectorListItems = titleArea.selectAll \li

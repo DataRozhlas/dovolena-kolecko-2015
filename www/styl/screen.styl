@@ -30,19 +30,26 @@
     h2
       font-weight normal
     .selector
-      // span
-      //   display block
-      //   float left
-      ul
-        display inline
-        margin 0px
-        padding 0px
-        li
-          padding 0px
-          display inline
-          &.selected
-            display none
-          &:not(.selected) ~ li:before
-            content " nebo "
-
+      .box
+        input
+          display none
+        label
+          display block
+          float left
+          border 1px solid ColorBlue
+          padding 4px 10px
+          &:hover
+            cursor pointer
+        &:not(:first-child) label
+          border-left 0px none
+        input:checked + label
+          background ColorBlue
+          box-shadow ColorBlue 0px 0px 3px
+          color #FFF
+        &:first-child label
+          border-top-left-radius 3px
+          border-bottom-left-radius 3px
+        &:last-child label
+          border-top-right-radius 3px
+          border-bottom-right-radius 3px
 
