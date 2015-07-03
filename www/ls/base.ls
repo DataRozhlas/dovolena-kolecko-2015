@@ -9,7 +9,11 @@ innerRadius = 670 * 0.48
 outerRadius = 680 * 0.5
 arcFill = (d, i) ->
   chordFill i
-
+formatCount = ->
+  if it
+    ig.utils.formatNumber it
+  else
+    "není známo, neeviduje se"
 chordFill = d3.scale.category20c!
 svg = container.append \svg
   ..attr \width width
@@ -107,8 +111,8 @@ draw = (dataToUse) ->
       ..style \fill (d, i) -> chordFill i
       ..style \stroke (d, i) -> chordFill i
     ..attr \data-tooltip ({source, target}:d) ->
-      "#{fullNames[target.index]} ➔ #{fullNames[source.index]} #{ig.utils.formatNumber data[source.index][target.index]}<br>
-      #{fullNames[source.index]} ➔ #{fullNames[target.index]} #{ig.utils.formatNumber data[target.index][source.index]}"
+      "#{fullNames[target.index]} ➔ #{fullNames[source.index]} #{formatCount data[source.index][target.index]}<br>
+      #{fullNames[source.index]} ➔ #{fullNames[target.index]} #{formatCount data[target.index][source.index]}"
     ..transition!
       ..duration 800
       ..attr \d def3
